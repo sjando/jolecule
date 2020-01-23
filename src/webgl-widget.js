@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import v3 from './v3'
 import * as util from './util'
 import * as glgeom from './glgeom'
-import { WEBVR } from 'three/examples/jsm/vr/WebVR';
+import { VRButton } from 'three/examples/jsm/webxr/VRButton';
 
 /**
  * Utility class to handle a three.js HTML object with
@@ -130,8 +130,8 @@ class WebglWidget {
     this.webglDiv[0].appendChild(dom)
 
     if (this.enableVr) {
-        this.renderer.vr.enabled = true;
-        const vrButton = WEBVR.createButton(this.renderer);
+        this.renderer.xr.enabled = true;
+        const vrButton = VRButton.createButton(this.renderer, {});
         this.webglDiv[0].appendChild(vrButton);
     }
 
@@ -232,7 +232,7 @@ class WebglWidget {
       near = 1
     }
 
-    const vrDisplay = this.enableVr ? this.renderer.vr.getDevice() : null;
+    const vrDisplay = this.enableVr ? this.renderer.xr.getSession() : null;
     const inVrNow = this.enableVr && vrDisplay && vrDisplay.isPresenting;
 
     this.camera.position.copy(this.cameraParams.position)

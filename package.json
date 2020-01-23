@@ -21,7 +21,7 @@
     "shortid": "^2.2.12",
     "signals": "^1.0.0",
     "test": "^0.6.0",
-    "three": "^0.107.0"
+    "three": "^0.112.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

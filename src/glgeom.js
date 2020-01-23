@@ -732,12 +732,12 @@ class BufferRibbonGeometry extends THREE.BufferGeometry {
     let indices = new Int32Array(this.nFace * 3)
     let colors = new Float32Array(this.nVertex * 3)
 
-    this.addAttribute(
+    this.setAttribute(
       'position',
       new THREE.Float32BufferAttribute(positions, 3)
     )
-    this.addAttribute('normal', new THREE.Float32BufferAttribute(normals, 3))
-    this.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
+    this.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3))
+    this.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
     this.setIndex(new THREE.Uint32BufferAttribute(indices, 1))
 
     this.positions = this.attributes.position.array
@@ -929,12 +929,12 @@ class BufferRaisedShapesGeometry extends THREE.BufferGeometry {
     let indices = new Int32Array(this.nFace * 3)
     let colors = new Float32Array(this.nVertex * 3)
 
-    this.addAttribute(
+    this.setAttribute(
       'position',
       new THREE.Float32BufferAttribute(positions, 3)
     )
-    this.addAttribute('normal', new THREE.Float32BufferAttribute(normals, 3))
-    this.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
+    this.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3))
+    this.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
     this.setIndex(new THREE.Uint32BufferAttribute(indices, 1))
 
     this.positions = this.attributes.position.array
@@ -1228,7 +1228,7 @@ class CopyBufferGeometry extends THREE.BufferGeometry {
       copyBufferGeometry.attributes.position.array,
       nCopy
     )
-    this.addAttribute(
+    this.setAttribute(
       'position',
       new THREE.Float32BufferAttribute(positions, 3)
     )
@@ -1237,10 +1237,10 @@ class CopyBufferGeometry extends THREE.BufferGeometry {
       copyBufferGeometry.attributes.normal.array,
       nCopy
     )
-    this.addAttribute('normal', new THREE.Float32BufferAttribute(normals, 3))
+    this.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3))
 
     let uvs = expandFloatArray(copyBufferGeometry.attributes.uv.array, nCopy)
-    this.addAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2))
+    this.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2))
 
     let nVertexInCopy = copyBufferGeometry.attributes.position.count
 
@@ -1256,7 +1256,7 @@ class CopyBufferGeometry extends THREE.BufferGeometry {
     }
 
     let colors = new Float32Array(nVertexInCopy * 3 * nCopy)
-    this.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
+    this.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
   }
 
   applyMatrixToCopy (matrix, iCopy) {
