@@ -709,8 +709,10 @@ class AquariaAlignment {
     embedJolecule.soupWidget.isCrossHairs = false
     embedJolecule.soupWidget.crossHairs.visible = false
     embedJolecule.soupView.setMode('chain')
-    this.setFullSequence(embedJolecule.widget.sequence)
-    embedJolecule.widget.sequence.update()
+    if (embedJolecule.widget.sequence) { // don't attempt to update sequence widget if the host application has diabled it
+      this.setFullSequence(embedJolecule.widget.sequence)
+      embedJolecule.widget.sequence.update()
+    }
     for (let [iChain, sequence] of this.data.sequences.entries()) {
       if (!_.isNil(sequence.primary_accession)) {
         let chain = this.data.pdb_chain[iChain]
