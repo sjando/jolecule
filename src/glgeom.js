@@ -1276,6 +1276,44 @@ class CopyBufferGeometry extends THREE.BufferGeometry {
     let iElemEnd = iElemStart + nElemRef
     applyColorToVector3array(color, colors, iElemStart, iElemEnd)
   }
+
+  extractCopy (iCopy, withVertexColor) {
+    const reference = this.refBufferGeometry;
+    const geometry = new THREE.BufferGeometry()
+    const position = this.getAttribute('position')
+    const normal = this.getAttribute('normal')
+    const color = this.getAttribute('color')
+    const index = this.getIndex()
+    // skip UV attribute  even through data sourced from built-in three.js geometry may have one, since this is never used
+    if (position) geometry.setAttribute('position', extractAttribute(position))
+    if (normal) geometry.setAttribute('normal', extractAttribute(normal))
+    if (color && withVertexColor) geometry.setAttribute('color', extractAttribute(color))
+    if (index) geometry.setIndex(extractIndex(index, -iCopy * reference.getAttribute('position').count))
+
+    return geometry;
+
+    function extractIndex (index, offset) {
+      const refIndex = reference.getIndex()
+      const copy = new THREE.BufferAttribute(new refIndex.array.constructor(refIndex.length), 1) // constructor based on reference as we might be able to drop a precision level
+      for (let i = 0; i < copy.length; i++) {
+        copy.array[i] = index.array[i + iCopy * copy.length] + offset // adjust for movement of vertex data
+      }
+      return copy;
+    }
+
+    function extractAttribute (attribute) {
+      const refPosition = reference.getAttribute('position') // extracted copy length based on refBufferGeometry position count only as certain other attributes (color) may not be initially set
+      const copy = new THREE.BufferAttribute(new attribute.array.constructor(refPosition.count * refPosition.itemSize), attribute.itemSize)
+      copyArray(attribute.array, iCopy * copy.length, copy.length, copy.array)
+      return copy;
+    }
+
+    function copyArray (source, offset, length, dest) {
+      for (let i = 0; i < length; i++) {
+        dest[i] = source[i + offset]
+      }
+    }
+  }
 }
 
 export {
