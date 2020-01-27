@@ -1480,13 +1480,6 @@ class Soup {
   colorResidues () {
     let residue = this.getResidueProxy()
     let isGridActive = _.some(_.values(this.grid.isElem))
-    if (isGridActive) {
-      for (let iRes of _.range(this.getResidueCount())) {
-        residue.iRes = iRes
-        residue.color = data.darkGrey
-      }
-    }
-
     for (let iRes of _.range(this.getResidueCount())) {
       residue.iRes = iRes
       residue.color = isGridActive ? data.darkGrey : residue.customColor
