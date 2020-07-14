@@ -34,7 +34,8 @@ class SoupWidget extends WebglWidget {
     controller,
     isGrid,
     backgroundColor,
-    isMouseWheel
+    isMouseWheel,
+    isPinchZoom
   ) {
     super(divTag, backgroundColor)
 
@@ -69,6 +70,7 @@ class SoupWidget extends WebglWidget {
     this.isGrid = isGrid
 
     this.isMouseWheel = isMouseWheel
+    this.isPinchZoom = isPinchZoom
 
     // Widgets that decorate the display
     // display distance measures between atoms
@@ -636,7 +638,7 @@ class SoupWidget extends WebglWidget {
 
   mousewheel (event) {
     console.log('SoupWidget.mousewheel', this.isMouseWheel)
-    if (!this.isMouseWheel) {
+    if (!this.isMouseWheel && (!this.isPinchZoom || !event.ctrlKey)) {
       return
     }
 
@@ -646,15 +648,9 @@ class SoupWidget extends WebglWidget {
 
     event.preventDefault()
 
-    let wheel
-    if (util.exists(event.wheelDelta)) {
-      wheel = event.wheelDelta / 480
-    } else {
-      // for Firefox
-      wheel = -event.detail / 24
-    }
+    let wheel = -event.deltaY / 24
 
-    // converted from pinch-zoom on chrome
+    // converted from pinch-zoom
     if (event.ctrlKey) {
       wheel /= 2
       wheel *= -1

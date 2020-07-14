@@ -33,7 +33,8 @@ let defaultArgs = {
   isToolbarOnTop: false,
   isToolbarOn: false,
   isTextOverlay: true,
-  isMouseWheel: true
+  isMouseWheel: true,
+  isPinchZoom: false // enable pinch-zoom trackpad gestures even when mousewheel disabled
 }
 
 class EmbedJolecule {
@@ -165,7 +166,9 @@ class EmbedJolecule {
       this.controller,
       this.params.isGrid,
       this.params.backgroundColor,
-      this.params.isMouseWheel
+      this.params.isMouseWheel,
+      this.params.isPinchZoom,
+      this.params.isTouchDisabled,
     )
 
     this.footerDiv = $('<div>')
